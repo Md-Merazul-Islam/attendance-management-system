@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     # Third-party apps
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "django.contrib.sites",
     "corsheaders",
     "allauth",
@@ -139,6 +140,13 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
     "UPDATE_LAST_LOGIN": True,
+    "USER_ID_FIELD": "uid",  # Use 'uid' instead of 'id'
+    "USER_ID_CLAIM": "user_id",
+    "TOKEN_OBTAIN_SERIALIZER": "apps.auths.serializers.CustomTokenObtainPairSerializer",
+    "TOKEN_CLASSES": {
+        "refresh": "apps.auths.utils.custom_token.CustomRefreshToken",
+        "access": "rest_framework_simplejwt.tokens.AccessToken",
+    },
 }
 
 # CORS configuration (base settings - will be overridden)

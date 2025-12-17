@@ -43,8 +43,6 @@ class RegisterAPIView(APIView):
                 samesite="Strict",
                 max_age=7 * 24 * 60 * 60,  # 1 week
             )
-
-            login(request, user)
             return response
 
         except Exception as e:
@@ -85,8 +83,6 @@ class LoginAPIView(APIView):
             samesite="Strict",
             max_age=7 * 24 * 60 * 60,  # 1 week
         )
-
-        login(request, user)
         return response
 
 
@@ -105,7 +101,24 @@ class LogoutAPIView(APIView):
 
             response = success_response("Logout successful")
             response.delete_cookie("refresh_token")
+            print(request.COOKIES)
+
             return response
 
         except Exception as e:
             return error_response("Logout failed", str(e), status=400)
+
+
+class MyProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        data = {
+            "user_id": str(user.uid),
+            "full_name": user.full_name,
+            "email": user.email,
+            "role": user.role.role_name if user.role else None,
+            "company": user.company.company_name if user.company else None,
+        }
+        return success_response("Success", data, status.HTTP_200_OK)

@@ -2,8 +2,8 @@
 from rest_framework import serializers
 
 class RegisterSerializer(serializers.Serializer):
-    ROLE_CHOICES = ["employee", "administrator"]
-
+    ROLE_CHOICES = ["Employee", "Administrator"]
+    email = serializers.EmailField()
     role = serializers.ChoiceField(choices=ROLE_CHOICES)
     full_name = serializers.CharField()
     password = serializers.CharField(write_only=True)

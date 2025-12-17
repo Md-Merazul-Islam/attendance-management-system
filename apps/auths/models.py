@@ -32,7 +32,13 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["full_name"]
-
+    @property
+    def id(self):
+        return self.uid
+    
+    @id.setter
+    def id(self, value):
+        self.uid = value
     def __str__(self):
         return f"{self.full_name} - {self.email} - {self.date_joined}"
 
