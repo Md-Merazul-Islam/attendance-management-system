@@ -21,7 +21,8 @@ urlpatterns = [
                 path("schema-viewer/", include("schema_viewer.urls")),
                 path("auth/", include("apps.auths.urls")),
                 path("companies/", include("apps.companies.urls")),
-]
+                path("attendance/", include("apps.attendance.urls")),
+            ]
         ),
     ),
 ]
