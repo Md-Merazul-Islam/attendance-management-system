@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Attendance Report - {{ company_name }}</title>
+    <style>
+        /* Main Styles */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .header h1 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        
+        .header p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+        
+        .company-info {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .info-row {
+            margin: 5px 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #2c3e50;
+            display: inline-block;
+            min-width: 80px;
+        }
+        
+        /* Statistics Table */
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        
+        .stats-table td {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            background: white;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        /* Attendance Table */
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 11px;
+        }
+        
+        .attendance-table thead {
+            background: #2c3e50;
+        }
+        
+        .attendance-table th {
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            color: white;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .attendance-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        .attendance-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .method-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .badge-nfc {
+            background: #3498db;
+            color: white;
+        }
+        
+        .badge-qr {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .employee-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .employee-id {
+            font-size: 10px;
+            color: #6c757d;
+            font-family: monospace;
+            display: block;
+            margin-top: 2px;
+        }
+        
+        .datetime-cell {
+            font-family: monospace;
+            font-size: 11px;
+            color: #495057;
+        }
+        
+        .serial-number {
+            text-align: center;
+            width: 30px;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+            color: #6c757d;
+            font-size: 10px;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px dashed #dee2e6;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body {
+                font-size: 11px;
+            }
+            
+            .header {
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            
+            .stats-table td {
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 20px;
+            }
+            
+            .attendance-table {
+                font-size: 10px;
+            }
+            
+            .attendance-table th,
+            .attendance-table td {
+                padding: 6px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Attendance Report</h1>
+        <p>{{ report_date }}</p>
+    </div>
+    
+    <!-- Company Information -->
+    <div class="company-info">
+        <div class="info-row">
+            <span class="info-label">Company:</span> {{ company_name }}
+        </div>
+        <div class="info-row">
+            <span class="info-label">Location:</span> {{ location }}
+        </div>
+        {% if date_range %}
+        <div class="info-row">
+            <span class="info-label">Period:</span> {{ date_range }}
+        </div>
+        {% endif %}
+        {% if report_type == 'employee' and employee_name %}
+        <div class="info-row">
+            <span class="info-label">Employee:</span> {{ employee_name }}
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Statistics -->
+    <table class="stats-table">
+        <tr>
+            <td>
+                <span class="stat-value">{{ total_records }}</span>
+                <span class="stat-label">Total Records</span>
+            </td>
+            <td>
+                <span class="stat-value">{{ nfc_count }}</span>
+                <span class="stat-label">NFC Scans</span>
+            </td>
+            <td>
+                <span class="stat-value">{{ qr_count }}</span>
+                <span class="stat-label">QR Scans</span>
+            </td>
+            <td>
+                <span class="stat-value">{{ unique_employees }}</span>
+                <span class="stat-label">
+                    {% if report_type == 'company' and total_company_employees %}
+                        Employees ({{ total_company_employees }} total)
+                    {% else %}
+                        Employees
+                    {% endif %}
+                </span>
+            </td>
+            {% if report_type == 'employee' and attendance_rate %}
+            <td>
+                <span class="stat-value">{{ attendance_rate }}%</span>
+                <span class="stat-label">Attendance Rate</span>
+            </td>
+            {% endif %}
+        </tr>
+    </table>
+    
+    <!-- Attendance Records -->
+    {% if attendances %}
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th class="serial-number">#</th>
+                    <th>Employee</th>
+                    <th style="width: 80px;">Method</th>
+                    <th style="width: 140px;">Date & Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendances %}
+                <tr>
+                    <td class="serial-number">{{ forloop.counter }}</td>
+                    <td>
+                        <span class="employee-name">
+                            {% if report_type == 'employee' and employee_name %}
+                                {{ employee_name }}
+                            {% else %}
+                                {{ attendance.user.full_name }}
+                            {% endif %}
+                        </span>
+                        {% if report_type == 'company' %}
+                        <span class="employee-id">
+                            ID: {{ attendance.user.uid|slice:"-8:"|upper }}
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="method-badge {% if attendance.code == 'NFC' %}badge-nfc{% else %}badge-qr{% endif %}">
+                            {{ attendance.code }}
+                        </span>
+                    </td>
+                    <td class="datetime-cell">
+                        {{ attendance.date|date:"Y-m-d" }}<br>
+                        {{ attendance.created_at|date:"H:i" }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">
+            No attendance records found for the specified period.
+        </div>
+    {% endif %}
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>Generated on {{ generated_at }}</p>
+        <p>{{ company_name }} - Attendance Management System</p>
+        <p>This is an auto-generated report.</p>
+    </div>
+</body>
+</html>
