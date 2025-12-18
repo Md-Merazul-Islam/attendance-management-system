@@ -1,7 +1,5 @@
 from apps.auths.models import User
 from rest_framework import serializers
-
-from apps.attendance.models import Attendance
 from apps.companies.models import Company
 
 

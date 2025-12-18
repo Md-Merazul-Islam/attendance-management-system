@@ -1,7 +1,6 @@
-from django.contrib.auth import login
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from common.utils.response import success_response, error_response
 from .serializers.login import LoginSerializer
@@ -10,6 +9,7 @@ from .services.auth_service import AuthService, AuthLoginService
 
 
 class RegisterAPIView(APIView):
+    permission_classes=[AllowAny]
     serializer_class = RegisterSerializer
 
     def post(self, request):
@@ -50,6 +50,7 @@ class RegisterAPIView(APIView):
 
 
 class LoginAPIView(APIView):
+    permission_classes = [AllowAny]
     serializer_class = LoginSerializer
 
     def post(self, request):
@@ -87,7 +88,6 @@ class LoginAPIView(APIView):
 
 
 class LogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
@@ -110,7 +110,6 @@ class LogoutAPIView(APIView):
 
 
 class MyProfile(APIView):
-    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user

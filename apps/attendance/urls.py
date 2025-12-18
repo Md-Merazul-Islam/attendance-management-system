@@ -5,11 +5,13 @@ from .views import (
     AttendanceCreateAPIView,
     EmployeeAttendanceListAPIView,
     UserDetailsRetrieveAPIView,
-    UsersListAPIView,
+    AllUsersListAPIView,
+    EmployeeAttendanceDetailAPIView
 )
 
 urlpatterns = [
-    path("my/", EmployeeAttendanceListAPIView.as_view(), name="employee-attendance-list"),
+    path("my-attendance/", EmployeeAttendanceListAPIView.as_view(), name="employee-attendance-list"),
+    path("my-attendance/<str:uid>/", EmployeeAttendanceDetailAPIView.as_view(), name="employee-attendance-detail"),
     path("admin/", AdminAttendanceListAPIView.as_view(), name="admin-attendance-list"),
     path("create/", AttendanceCreateAPIView.as_view(), name="attendance-create"),
     path(
@@ -17,7 +19,7 @@ urlpatterns = [
         UserDetailsRetrieveAPIView.as_view(),
         name="employee-details",
     ),
-    path("employees/", UsersListAPIView.as_view(), name="employee-list"),
+    path("all-users/", AllUsersListAPIView.as_view(), name="all-employee-list"),
     path(
         "<str:uid>/",
         AdminAttendanceDetailAPIView.as_view(),

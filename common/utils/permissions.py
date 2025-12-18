@@ -5,7 +5,7 @@ class RolePermission(permissions.BasePermission):
     Base permission class to check if user has a specific role(s) or is staff/superuser.
     """
 
-    allowed_roles = []  # Override in subclasses
+    allowed_roles = []  
 
     def has_permission(self, request, view):
         user = request.user
@@ -16,13 +16,21 @@ class RolePermission(permissions.BasePermission):
         return user.role.role_name in self.allowed_roles
 
 
-class IsAdminRole(RolePermission):
-    allowed_roles = ["admin"]
-
-
 class IsEmployee(RolePermission):
     allowed_roles = ["Employee"]
 
 
 class IsAdministrator(RolePermission):
     allowed_roles = ["Administrator"]
+
+
+class IsCompanyAdministrator(IsAdministrator):
+    """
+    Administrator who is assigned to a company
+    """
+
+    def has_permission(self, request, view):
+        if not super().has_permission(request, view):
+            return False
+
+        return request.user.company is not None
