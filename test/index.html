@@ -75,29 +75,26 @@
             font-weight: 600;
         }
         
-        /* Statistics Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 24px;
+        /* Statistics Table */
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
         }
         
-        .stat-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 16px;
+        .stats-table td {
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e9ecef;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            background: white;
         }
         
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: bold;
             color: #2c3e50;
+            display: block;
             line-height: 1;
-            margin-bottom: 4px;
         }
         
         .stat-label {
@@ -105,6 +102,8 @@
             color: #6c757d;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: block;
+            margin-top: 5px;
         }
         
         /* Attendance Table */
@@ -387,8 +386,6 @@
     <div class="footer">
         <div class="page-number">Page 1 of 1</div>
         <p>Generated on {{ generated_at }}</p>
-        <p>{{ company_name }} • Attendance Management System</p>
-        <p>Confidential Document • Report ID: ATT-{{ generated_at|date:"Ymd" }}-{{ total_records }}</p>
     </div>
 </body>
 </html>

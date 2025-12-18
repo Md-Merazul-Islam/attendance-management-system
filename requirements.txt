@@ -15,6 +15,5 @@ django-schema-viewer
 django-filter
 drf-yasg
 xhtml2pdf
-weasyprint
-
+WeasyPrint
 
