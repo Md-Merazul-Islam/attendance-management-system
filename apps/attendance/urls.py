@@ -14,15 +14,7 @@ urlpatterns = [
     path("my-attendance/<str:uid>/", EmployeeAttendanceDetailAPIView.as_view(), name="employee-attendance-detail"),
     path("admin/", AdminAttendanceListAPIView.as_view(), name="admin-attendance-list"),
     path("create/", AttendanceCreateAPIView.as_view(), name="attendance-create"),
-    path(
-        "employee/<str:uid>/info/",
-        UserDetailsRetrieveAPIView.as_view(),
-        name="employee-details",
-    ),
+    path( "employee/<str:uid>/info/",  UserDetailsRetrieveAPIView.as_view(), name="employee-details", ),
     path("all-users/", AllUsersListAPIView.as_view(), name="all-employee-list"),
-    path(
-        "<str:uid>/",
-        AdminAttendanceDetailAPIView.as_view(),
-        name="admin-attendance-detail",
-    ),
+    path("<str:uid>/",AdminAttendanceDetailAPIView.as_view(),name="admin-attendance-detail",),
 ]

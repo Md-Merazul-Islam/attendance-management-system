@@ -8,7 +8,7 @@ from .serializers.attendance_list import (
 from .serializers.employ_details import EmployeeDetailsSerializer
 from .models import Attendance
 from .services.attendance_service import AttendanceService
-from common.utils.permissions import IsAdministrator
+from common.utils.permissions import IsAdministrator,IsAdmin
 from common.pagination.pagination import CustomPagination
 from common.utils.response import success_response, error_response
 from common.api.getApi import BaseListAPIView, BaseRetrieveAPIView
@@ -129,7 +129,7 @@ class UserDetailsRetrieveAPIView(BaseRetrieveAPIView):
 class AllUsersListAPIView(BaseListAPIView):
     """Here a super user or main admin can using this api can see all user data"""
 
-    permission_classes = [IsAdministrator]
+    permission_classes = [IsAdmin]
     serializer_class = EmployeeDetailsSerializer
     pagination_class = CustomPagination
     queryset = User.objects.select_related("company", "role").all().order_by("full_name")

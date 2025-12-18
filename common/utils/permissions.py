@@ -15,6 +15,8 @@ class RolePermission(permissions.BasePermission):
             return True
         return user.role.role_name in self.allowed_roles
 
+class IsAdmin(RolePermission):
+    allowed_roles = ["Admin"]
 
 class IsEmployee(RolePermission):
     allowed_roles = ["Employee"]
