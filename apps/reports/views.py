@@ -6,7 +6,7 @@ from datetime import datetime
 from common.utils.permissions import IsAdministrator
 from .serializers.reports import AttendanceReportSerializer
 from .services.attendance_report_service import AttendanceReportService
-from common.utils.response import success_response, error_response
+from common.utils.response import error_response
 
 
 class CompanyAttendancePDFView(APIView):
