@@ -20,4 +20,4 @@ class Attendance(models.Model):
         unique_together = ("user", "date")
         ordering = ["-date"]
     def __str__(self):
-        return self.name
+        return f"{self.user.username} - {self.date}"
