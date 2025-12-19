@@ -301,6 +301,9 @@ Returns: PDF file with all employees
 ---
 
 ## 🏗️ System Architecture
+<img width="auto" height="370" alt="image" src="https://github.com/user-attachments/assets/19868b6c-4cee-453e-9344-21c97bd58486" />
+
+
 
 ### Models
 ```
@@ -418,6 +421,11 @@ Admin (super user):
 5. **Pagination:** Limit query results
 
 ---
+
+
+## PDF Style :
+
+<img width="791" height="851" alt="image" src="https://github.com/user-attachments/assets/5daca897-5edc-41eb-9d3c-5ed89b86d7f4" />
 
 
 
