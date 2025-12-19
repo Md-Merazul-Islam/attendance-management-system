@@ -76,6 +76,7 @@ class AuthTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_logout_success(self):
+        # Create user
         user = User.objects.create_user(
             email="logout@example.com",
             full_name="Logout User",
@@ -83,12 +84,40 @@ class AuthTestCase(APITestCase):
             role=self.employee_role,
             company=self.company
         )
-        # login to set cookie
+        
+        # Login to get token
         login_payload = {"email": "logout@example.com", "password": "LogoutPass123"}
-        response = self.client.post(self.login_url, login_payload, format='json')
-        self.client.cookies["refresh_token"] = response.cookies["refresh_token"].value
+        login_response = self.client.post(self.login_url, login_payload, format='json')
+        
+        # Debug: Print the login response
+        print("\n=== LOGIN RESPONSE ===")
+        print(f"Status: {login_response.status_code}")
+        print(f"Data: {login_response.data}")
+        print(f"Cookies: {login_response.cookies}")
+        
+        # Check if login was successful
+        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+        
+        # Extract token from login response
+        token = login_response.data["data"]["token"]
+        print(f"\n=== TOKEN ===")
+        print(f"Token: {token}")
+        
+        # Method 1: Try with Authorization header
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        
+        # Method 2: Also set refresh token cookie if it exists
+        if "refresh_token" in login_response.cookies:
+            self.client.cookies["refresh_token"] = login_response.cookies["refresh_token"].value
 
-        # Logout
+        # Now logout with authentication
+        print("\n=== LOGOUT REQUEST ===")
         response = self.client.post(self.logout_url, format='json')
+        
+        print(f"\n=== LOGOUT RESPONSE ===")
+        print(f"Status: {response.status_code}")
+        print(f"Data: {response.data}")
+        
+        # Assert
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["message"], "Logout successful")
