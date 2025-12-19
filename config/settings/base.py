@@ -76,7 +76,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# Custom User Model (uncomment and modify as needed)
 AUTH_USER_MODEL = "auths.User"
 
 
@@ -151,7 +150,6 @@ SIMPLE_JWT = {
     },
 }
 
-# CORS configuration (base settings - will be overridden)
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = []
 CSRF_TRUSTED_ORIGINS = []
@@ -178,14 +176,11 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
-# Session in Redis for better performance
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
-# for development
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
