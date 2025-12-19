@@ -32,7 +32,12 @@ class AuthService:
             if not company_name or not location:
                 raise ValueError("company_name and location required for Administrator")
             role_obj = UserRepository.get_role_by_name("Administrator")
-            company = Company.objects.create(company_name=company_name, location=location)
+            
+            # check already company exist
+            company, created = Company.objects.get_or_create(
+                company_name=company_name,
+                location=location
+            )
             user = UserRepository.create_user(
                 email=email,
                 full_name=full_name,

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Role, UserSecurity
+from .models import User, Role
 from django.utils.translation import gettext_lazy as _
 
 # Role Admin
@@ -8,14 +8,6 @@ from django.utils.translation import gettext_lazy as _
 class RoleAdmin(admin.ModelAdmin):
     list_display = ("id", "role_name")
     search_fields = ("role_name",)
-
-
-# UserSecurity Admin
-@admin.register(UserSecurity)
-class UserSecurityAdmin(admin.ModelAdmin):
-    list_display = ("user", "reset_token", "reset_token_expires")
-    search_fields = ("user__email", "reset_token")
-    readonly_fields = ("reset_token", "reset_token_expires")
 
 
 # Custom User Admin

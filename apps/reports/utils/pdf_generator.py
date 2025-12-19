@@ -3,54 +3,34 @@ from io import BytesIO
 from datetime import datetime
 from django.http import HttpResponse
 from django.conf import settings
+import logging
 
+logger = logging.getLogger(__name__)
 class AttendancePDFGenerator:
     """Utility class for generating attendance PDF reports using WeasyPrint"""
 
     @staticmethod
     def _render_pdf_from_html(html_string):
-        """
-        Render PDF from HTML.
-        Primary: WeasyPrint
-        Fallback: xhtml2pdf
-        """
-
-        # 1 Try WeasyPrint (best quality)
         try:
             from weasyprint import HTML
-
             pdf_buffer = BytesIO()
-            HTML(
-                string=html_string,
-                base_url=str(settings.BASE_DIR)
-            ).write_pdf(pdf_buffer)
-
+            HTML(string=html_string, base_url=str(settings.BASE_DIR)).write_pdf(pdf_buffer)
             return pdf_buffer.getvalue()
-
         except Exception as weasy_error:
-            # 2 Fallback to xhtml2pdf (safe)
+            logger.error(f"WeasyPrint error: {weasy_error}")
             try:
                 from xhtml2pdf import pisa
-
                 pdf_buffer = BytesIO()
-                pdf = pisa.CreatePDF(
-                    src=html_string,
-                    dest=pdf_buffer,
-                    encoding="UTF-8"
-                )
-
+                pdf = pisa.CreatePDF(src=html_string, dest=pdf_buffer, encoding="UTF-8")
                 if pdf.err:
                     raise Exception("xhtml2pdf rendering error")
-
                 return pdf_buffer.getvalue()
-
             except Exception as pisa_error:
+                logger.error(f"xhtml2pdf error: {pisa_error}")
                 raise Exception(
-                    f"PDF generation failed. "
-                    f"WeasyPrint error: {weasy_error} | "
-                    f"xhtml2pdf error: {pisa_error}"
+                    f"PDF generation failed. WeasyPrint error: {weasy_error} | xhtml2pdf error: {pisa_error}"
                 )
-
+                
     @staticmethod
     def generate_report(attendances, company, filters=None):
         """Generate PDF report for company attendance"""
