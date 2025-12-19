@@ -5,8 +5,9 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+# Install build tools and dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential gcc libpq-dev libffi-dev curl \
+    build-essential gcc libpq-dev libffi-dev curl pkg-config libcairo2-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -21,12 +22,12 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev curl \
+# runtime dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev curl libcairo2 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /install /usr/local
 COPY . /app
-
-
 
 EXPOSE 8000

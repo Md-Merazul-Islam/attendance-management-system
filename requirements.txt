@@ -1,19 +1,13 @@
 django
-dj-database-url
+python-dotenv    
 djangorestframework       
 djangorestframework_simplejwt 
-pillow 
-psycopg2-binary
 gunicorn
 whitenoise 
 django-cors-headers
-python-dotenv    
-argon2-cffi
 django-allauth  
-requests
 django-schema-viewer
 django-filter
-drf-yasg
 xhtml2pdf
 WeasyPrint
 

@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "schema_viewer",
     "django_filters",
-    "drf_yasg",
     # Local apps
     "scripts",
     "common",
@@ -135,7 +134,7 @@ REST_FRAMEWORK = {
 
 # Simple JWT configuration
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7), #1 week
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -178,9 +177,5 @@ PASSWORD_HASHERS = [
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
