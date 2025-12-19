@@ -14,7 +14,7 @@ A comprehensive Django REST API for managing employee attendance using NFC cards
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/attendance-management-system.git
+git clone https://github.com/Md-Merazul-Islam/attendance-management-system.git
 cd attendance-management-system
 
 #1️⃣ Docker Support (Optional)
@@ -55,7 +55,7 @@ python manage.py runserver
 
 ## 📚 API Documentation
 
-Base URL: `http://206.162.244.143:7773/api/v1`
+Base URL ( Hosted on Ec2 AWS ): `http://206.162.244.143:7773/api/v1`
 
 Postman Link : https://documenter.getpostman.com/view/40097709/2sB3dVPoCD
 
