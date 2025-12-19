@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import Attendance
-from datetime import date
 
 class AttendanceCreateSerializer(serializers.ModelSerializer):
     class Meta:

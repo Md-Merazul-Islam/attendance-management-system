@@ -5,7 +5,6 @@ class AttendanceService:
     @staticmethod
     def create_attendance(user, validated_data):
         """
-        Rule:
         - Only one attendance per user per day
         - Either NFC or QR must be true
         """
