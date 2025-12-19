@@ -30,4 +30,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /install /usr/local
 COPY . /app
 
-EXPOSE 8000
+EXPOSE 7773
