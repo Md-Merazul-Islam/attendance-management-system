@@ -12,6 +12,14 @@ DATABASES = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://206.162.244.143:7773",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+
+    "http://206.162.244.143:7773",
+]
 
 # Session Configuration
 SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
