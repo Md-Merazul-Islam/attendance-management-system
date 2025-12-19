@@ -19,8 +19,17 @@ cd attendance-management-system
 
 #1️⃣ Docker Support (Optional)
 
-docker-compose up -d --build
+# Build and start containers
+docker-compose up --build
 
+# Run in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop containers
+docker-compose down
 
 # 2️⃣Create virtual environment
 python -m venv venv

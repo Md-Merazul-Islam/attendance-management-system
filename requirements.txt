@@ -1,10 +1,11 @@
 django
-python-dotenv    
 djangorestframework       
 djangorestframework_simplejwt 
 gunicorn
 whitenoise 
 django-cors-headers
+python-dotenv    
+argon2-cffi
 django-allauth  
 django-schema-viewer
 django-filter
